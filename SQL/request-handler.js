@@ -13,6 +13,7 @@ exports.postMessage = function(req, res) {
   var message;
 
   var resultsCallback = function (results) {
+    //console.log(results);
       var chat = {
         message: message.message,
         userid: results[0].id,
@@ -30,6 +31,7 @@ exports.postMessage = function(req, res) {
         // no results/0 results
         if (!results || !results.length) {
           // create the user, then post the message
+          console.log(results);
           saveUser(message.username, resultsCallback);
         } else {
           // user exists, post the message to this user

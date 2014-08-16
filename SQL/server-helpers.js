@@ -13,6 +13,7 @@ exports.collectData = function(request, cb){
   });
   request.on("end", function(){
     cb(null, JSON.parse(data));
+    // console.log(data);
   });
 };
 
