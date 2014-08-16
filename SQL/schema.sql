@@ -4,7 +4,7 @@ USE chat;
 /* Create other tables and define schemas for them here! */
 CREATE TABLE users (
   UserID int NOT NULL AUTO_INCREMENT,
-  UserName varchar(20),
+  UserName varchar(20) UNIQUE,
   PRIMARY KEY(UserID)
 );
 

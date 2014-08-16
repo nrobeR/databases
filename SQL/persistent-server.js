@@ -22,12 +22,13 @@ var router = function(req, res) {
     if (method === 'POST') {
       handlers.postMessage(req, res);
     } else if (method === 'GET') {
+      console.log("go to GET");
       handlers.getMessages(req, res);
     } else if (method === 'OPTIONS') {
       handlers.sendOptionsResponse(req, res);
     }
   } else {
-    handlers.sendResponse(res, '', 404);
+    serverHelpers.sendResponse(res, '', 404);
   }
 };
 

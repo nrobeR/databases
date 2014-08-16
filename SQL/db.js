@@ -22,18 +22,34 @@ dbConnection.connect();
 
 
 exports.findAllMessages = function(cb){
+  var queryString = 'SELECT users.UserID, UserName, Message, CreatedAt, RoomName FROM users inner join messages ON users.UserID = messages.UserID';
+  dbConnection.query(queryString, function(err, messages){
+    console.log(messages);
+    cb(err, messages);
+  });
 };
 
 exports.findUser = function(username, cb){
   // dbConnection.query('SELECT UserName FROM users WHERE UserName = ' + username, cb);
-  var test = 'SELECT UserName FROM users WHERE UserName = ?';
+  var test = 'SELECT * FROM users WHERE UserName = ?';
   dbConnection.query(test, [username], cb);
 };
 
 exports.saveUser = function(username, cb){
-  dbConnection.query('INSERT INTO users (UserName) values ?', [username], cb);
+  console.log('got here', username, cb);
+  dbConnection.query('INSERT INTO users (UserName) values (?)', [username], function(){
+    dbConnection.query('SELECT * from users WHERE UserID = LAST_INSERT_ID()', function(err, results){
+      cb(results);
+    });
+  });
 };
 
 exports.saveMessage = function(message, userid, roomname, cb){
-
+  var values = [null, userid, message, null, roomname];
+  dbConnection.query('INSERT INTO messages values(?)', [values], function(){
+    dbConnection.query('SELECT * from messages WHERE MessageID = LAST_INSERT_ID()', [values], function(err,results){
+      console.log(results);
+      cb();
+    });
+  });
 };
