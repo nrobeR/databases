@@ -37,11 +37,7 @@ exports.findUser = function(username, cb){
 
 exports.saveUser = function(username, cb){
   console.log('got here', username, cb);
-  dbConnection.query('INSERT INTO users (UserName) values (?)', [username], function(){
-    dbConnection.query('SELECT * from users WHERE UserID = LAST_INSERT_ID()', function(err, results){
-      cb(results);
-    });
-  });
+  dbConnection.query('INSERT INTO users (UserName) values (?)', [username], callback);
 };
 
 exports.saveMessage = function(message, userid, roomname, cb){
